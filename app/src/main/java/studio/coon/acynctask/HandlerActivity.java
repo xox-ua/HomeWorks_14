@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -37,36 +38,8 @@ public class HandlerActivity extends BaseActivity {
 
         btnHandler.setText("AsyncTask");
 
-
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Bundle bundle = msg.getData();
-                long timeS = bundle.getLong("TimeStart");
-                long timeE = bundle.getLong("TimeEnd");
-                tvResult.setText(bundle.getString("Pass"));
-                long differenceMS = timeE - timeS;
-                tvMilSec.setText(String.valueOf(differenceMS) + " мс");
-            }
-        };
+        mHandler = new ValidHandler(this);
     }
-
-
-
-//    @Override
-//    protected void onPause() {
-//        // Удаляем Runnable-объект для прекращения задачи
-//        mHandler.removeCallbacks(runnable);
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        // Добавляем Runnable-объект
-//        mHandler.postDelayed(runnable, 100);
-//    }
 
     // нажатие кнопки Start
     @OnClick(R.id.btnStart)
